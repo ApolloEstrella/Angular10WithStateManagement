@@ -13,7 +13,7 @@
       <div class="col-md-2 todoItem">{{ todo.Id }}</div>
       <div class="col-md-2 todoItem">{{ todo.Title }}</div>
       <div class="col-md-2">IsCompleted:</div>
-      <div class="col-md-2 todoItem">{{ todo.IsCompleted }}<button (click)="deleteToDo(todo)">Delete</button></div>
+      <div class="col-md-2 todoItem">{{ todo.IsCompleted }}<button (click)="deleteToDo(todo)">Delete</button><button (click)="loadEdit(todo)">Edit</button></div>
     </div>
   </div>
 </div>
@@ -25,12 +25,14 @@
   <form (ngSubmit)="createToDo()">
     <div class="row">
       <div class="form-group col-md-4">
+        <input type="hidden" id="todoId">
         <input
           [(ngModel)]="Title"
           placeholder="Enter your Wish"
           class="form-control"
           name="Title"
           style="min-width: 150px;"
+          id="Title"
         />
       </div>
 
@@ -51,7 +53,7 @@
 
       <div class="col-md-2">
         <button type="submit" class="btn btn-primary" style="Width:70px;">
-          Add
+          Submit
         </button>
       </div>
     </div>

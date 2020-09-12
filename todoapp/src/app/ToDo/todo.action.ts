@@ -40,4 +40,14 @@ export const SuccessDeleteToDoAction = createAction(
   props<{ payload: ToDo }>()
 );
 
+export const BeginUpdateToDoAction = createAction(
+  '[ToDo] - Begin Update ToDo',
+  props<{ payload: ToDo }>()
+);
+
+export const SuccessUpdateToDoAction = createAction(
+  '[ToDo] - Sucess Update ToDo',
+  props<{ payload: ToDo }>()
+);
+
 export const ErrorToDoAction = createAction('[ToDo] - Error', props<Error>());

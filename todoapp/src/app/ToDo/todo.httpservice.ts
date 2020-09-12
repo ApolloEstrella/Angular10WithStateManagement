@@ -24,4 +24,10 @@ export class ToDoHttpService {
   deleteToDos(id: number): Observable<ToDo> {
     return this.httpclient.delete<ToDo>(`${this.ApiURL}/${id}`);
   }
+
+  updateToDos(payload: ToDo): Observable<ToDo> {
+    return this.httpclient.put<ToDo>(this.ApiURL, JSON.stringify(payload), {
+      headers: { 'Content-Type': 'application/json; charset=utf-8', 'dataType': 'json' }
+    });
+  }
 }

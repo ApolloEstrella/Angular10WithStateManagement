@@ -5,6 +5,7 @@ import { map } from 'rxjs/operators';
 import * as ToDoActions from '../todo.action';
 import ToDo from '../todo.model';
 import ToDoState from '../todo.state';
+import * as jquery from 'jquery'
  
 
 @Component({
@@ -41,19 +42,36 @@ export class ToDoComponent implements OnInit {
   todoError: Error = null;
 
   createToDo() {
-    const todo: ToDo = { Id: this.Id, Title: this.Title, IsCompleted: this.IsCompleted };
-    this.store.dispatch(ToDoActions.BeginCreateToDoAction({payload: todo }));
-    this.Title = '';
-    this.IsCompleted = false;
+    var todoId = $("#todoId").val()
+    if (todoId === '') {
+      const todo: ToDo = { Id: this.Id, Title: this.Title, IsCompleted: this.IsCompleted };
+      this.store.dispatch(ToDoActions.BeginCreateToDoAction({ payload: todo }));
+      this.Title = '';
+      this.IsCompleted = false;
+    }
+    else {
+      const title = $("#Title").val()
+      var isCompleted = $("#IsCompleted").prop('checked')
+      const todo: ToDo = { Id: Number(todoId), Title: String(title), IsCompleted: isCompleted };
+      this.store.dispatch(ToDoActions.BeginUpdateToDoAction({ payload: todo }));
+      this.Title = '';
+      this.IsCompleted = false;
+      $("#todoId").val('')
+      $("#IsCompleted").prop('checked', false)
+    }
   }
 
   deleteToDo(t) {
     const todo: ToDo = { Id: t.Id, Title: t.Title, IsCompleted: t.IsCompleted };
     this.store.dispatch(ToDoActions.BeginDeleteToDoAction({ payload: todo }));
-    //this.Title = '';
-    //this.IsCompleted = false;
   }
 
+  loadEdit(t) {
+    const todo: ToDo = { Id: t.Id, Title: t.Title, IsCompleted: t.IsCompleted };
+    $("#Title").val(t.Title)
+    $("#IsCompleted").prop('checked', t.IsCompleted)
+    $("#todoId").val(t.Id)
+  }
 
   ngOnDestroy() {
     if (this.ToDoSubscription) {

@@ -60,4 +60,21 @@ export class ToDoEffects {
     )
   ); 
 
+  UpdateToDos$: Observable<Action> = createEffect(() =>
+    this.action$.pipe(
+      ofType(ToDoActions.BeginUpdateToDoAction),
+      mergeMap(action =>
+        this.todoService.updateToDos(action.payload).pipe(
+          map((data: ToDo) => {
+            console.log(data)
+            return ToDoActions.SuccessUpdateToDoAction({ payload: action.payload });
+          }),
+          catchError((error: Error) => {
+            return of(ToDoActions.ErrorToDoAction(error));
+          })
+        )
+      )
+    )
+  );
+
 }
